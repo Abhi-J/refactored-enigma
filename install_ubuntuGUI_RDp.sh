@@ -1,9 +1,17 @@
 #!/bin/bash
 
-# Install GUI packages
+# Update the system
 sudo apt-get update
-sudo apt-get install ubuntu-desktop -y
+sudo apt-get upgrade -y
 
-# Configure VM to start GUI on boot
-sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="\(.*\)"/GRUB_CMDLINE_LINUX_DEFAULT="\1 quiet splash"/' /etc/default/grub
-sudo update-grub
+# Install Ubuntu desktop
+sudo apt-get install -y ubuntu-desktop
+
+# Install XRDP
+sudo apt-get install -y xrdp
+
+# Configure XRDP to use the Ubuntu desktop environment
+echo "startxfce4" | sudo tee /etc/xrdp/startwm.sh
+
+# Restart XRDP service
+sudo systemctl restart xrdp
